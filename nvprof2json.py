@@ -150,7 +150,7 @@ def main():
                 "tid": "MemCpy ({})".format(copyKind),
                 # TODO: lookup GPU name.  This is tored in
                 # CUPTI_ACTIVITY_KIND_DEVICE
-                "pid": "[{}:{}] Overview".format(row["deviceId"], row["contextId"]),
+                "pid": "[{}:{}] Overview {}".format(row["deviceId"], row["contextId"], row["streamId"]),
                 "args": {
                     "Size": sizeof_fmt(row["bytes"]),
                     # TODO: More
@@ -198,7 +198,7 @@ def main():
                 "dur": munge_time(row["end"] - row["start"]),
                 "tid": "Compute",
                 # TODO: lookup GPU name
-                "pid": "[{}:{}] Overview".format(row["deviceId"], row["contextId"]),
+                "pid": "[{}:{}] Overview {}".format(row["deviceId"], row["contextId"], row["streamId"]),
                 "args": {
                     "Grid size": "[ {}, {}, {} ]".format(row["gridX"], row["gridY"], row["gridZ"]),
                     "Block size": "[ {}, {}, {} ]".format(row["blockX"], row["blockY"], row["blockZ"]),
@@ -207,7 +207,7 @@ def main():
                 }
         alt_event = copy.deepcopy(event)
         alt_event["tid"] = alt_event["name"]
-        alt_event["pid"] = "[{}:{}] Compute".format(row["deviceId"], row["contextId"])
+        alt_event["pid"] = "[{}:{}] Compute {}".format(row["deviceId"], row["contextId"], row["streamId"])
         traceEvents.append(event)
         traceEvents.append(alt_event)
 
